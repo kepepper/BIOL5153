@@ -15,3 +15,5 @@
  This is a Python SLURM script to streamline executing jobs on the cluster. 
 
 ![](assn04screenshot.png)
+
+ This is screenshot shows my scripts being executable from storage/kepepper.
