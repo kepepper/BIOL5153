@@ -16,7 +16,7 @@
 
 ![](assn04screenshot.png)
 
-	This is screenshot shows my scripts being executable from storage/kepepper.
+	This screenshot shows my scripts being executable from storage/kepepper.
 
 * nucleotide_composition.py
 
