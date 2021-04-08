@@ -18,8 +18,8 @@ args = parser.parse_args()
 
 # read in FASTA file
 genome = SeqIO.read(args.fasta, 'fasta')
-print(genome.id)
-print(len(genome.seq))
+#print(genome.id)
+#print(len(genome.seq))
 
 # open and read in GFF file
 with open(args.gff, 'r') as gff_in:
@@ -31,6 +31,10 @@ with open(args.gff, 'r') as gff_in:
 		start = line[3]
 		end = line[4]
 		strand = line[6]
-
+		
 		# extract the sequence
-
+		print('>', genome.id, line[8])
+		if strand == '+':
+			print(genome.seq[int(start)-1:int(end)])
+		else: 
+			print(genome.seq[int(start)-1:int(end)].reverse_complement())
