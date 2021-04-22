@@ -1,5 +1,7 @@
+
 #! /usr/bin/env python3
 
+import re
 import csv
 import argparse
 from Bio import SeqIO
@@ -12,29 +14,55 @@ parser = argparse.ArgumentParser(description='This script will parse a GFF file 
 # add positional arguments
 parser.add_argument("gff", help='name of the GFF file')
 parser.add_argument("fasta", help='name of the FASTA file')
+parser.add_argument("gene_name", help='name of the gene to extract')
+parser.add_argument("feature_type", help='type of feature to extract')
 
 # parse the arguments
 args = parser.parse_args()
 
 # read in FASTA file
 genome = SeqIO.read(args.fasta, 'fasta')
-#print(genome.id)
-#print(len(genome.seq))
+
+
+# rev_comp function for Assn7 part 1
+def rev_comp(feature_seq, strand):
+	if strand == '-':
+		return(feature_seq.reverse_complement())
+	else:
+		return(feature_seq)
+
 
 # open and read in GFF file
 with open(args.gff, 'r') as gff_in:
+
 	# create a csv reader object
 	reader = csv.reader(gff_in, delimiter='\t')
 
 	# loop over all the lines in our reader object (i.e., parsed file)
 	for line in reader:
-		start = line[3]
-		end = line[4]
-		strand = line[6]
-		
-		# extract the sequence
-		print('>', genome.id, line[8])
-		if strand == '+':
-			print(genome.seq[int(start)-1:int(end)])
-		else: 
-			print(genome.seq[int(start)-1:int(end)].reverse_complement())
+		# skip blank lines
+		if(not line):
+			continue
+
+		# skip comment lines
+		elif(re.search('^#', line[0])):
+			continue
+
+		# else it's a data line
+		else:
+			feature = line[2]
+			start = line[3]
+			end = line[4]
+			strand = line[6]
+			attributes = line[8]
+
+			if(feature == args.feature_type):
+				pat = re.compile(args.gene_name)
+				match = pat.search(attributes, re.I)
+				if(match):
+					fragment = genome.seq[int(start)-1:int(end)]
+					print(args.feature_type, start, end, strand, attributes)
+				else:
+					continue
+
+
