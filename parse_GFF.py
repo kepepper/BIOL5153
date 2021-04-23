@@ -25,7 +25,7 @@ genome = SeqIO.read(args.fasta, 'fasta')
 def rev_comp(feature_seq, strand):
 	if strand == '-':
 		return(feature_seq.reverse_complement())
-	else: 
+	else:
 		return(feature_seq)
 
 # dictionary
@@ -43,7 +43,7 @@ with open(args.gff, 'r') as gff_in:
 		# skip blank lines
 		if(not line):
 			continue
-		
+
 		# skip comment lines
 		elif(re.search('^#', line[0])):
 			continue
@@ -68,11 +68,11 @@ with open(args.gff, 'r') as gff_in:
 
 				elif(not gene_dict[gene_header]):
 					# using 10 placeholder spaces as watermelon.gff doesn't appear to have more than 5 exons for any gene
-					gene_dict[gene_header] = [' ']*10 
+					gene_dict[gene_header] = [' ']*10
 
 					gene_dict[gene_header][int(exon_num[1])-1] = rev_comp(genome.seq[int(start)-1:int(end)], strand)
 
-				else: 
+				else:
 					gene_dict[gene_header][int(exon_num[1])-1] = rev_comp(genome.seq[int(start)-1:int(end)], strand)
 
 for key in gene_dict:
