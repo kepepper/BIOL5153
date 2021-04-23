@@ -24,4 +24,4 @@
 
 * parse_GFF.py
 
-	This is a Python script meant to read a GFF and FASTA file and return important details and the nucleotide sequence for each gene provided; submitted for assignment 6.
+	This is a Python script meant to read a GFF and FASTA file and return important details and the nucleotide sequence for each gene provided; submitted for assignment 6. Modified for assignment 7. Now capable of returning the full sequence of each gene with exons spliced together in correct order. 
